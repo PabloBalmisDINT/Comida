@@ -1,0 +1,173 @@
+﻿<Window x:Class="Comida.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Comida"
+        mc:Ignorable="d"
+        Title="Comidas" 
+        Height="450" 
+        Width="650"
+        MinHeight="300"
+        MinWidth="400"
+        Icon="./assets/fruit_food_apple.ico"
+        Background="Cyan">
+    <Window.Resources>
+        <local:PaisCovertidor x:Key="converterPais"></local:PaisCovertidor>
+        <local:FuenteConvertidor x:Key="converterFuente"></local:FuenteConvertidor>
+        
+        <!--Estilos y triggers-->
+        <Style TargetType="Image" x:Key="TriggerSoja">
+            <Setter Property="Visibility"
+                    Value="Collapsed"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Soja}"
+                         Value="True">
+                    <Setter Property="Visibility"
+                            Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Image"
+               x:Key="TriggerGluten">
+            <Setter Property="Visibility"
+                    Value="Collapsed"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Gluten}"
+                             Value="True">
+                    <Setter Property="Visibility"
+                            Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Image"
+               x:Key="TriggerLeche">
+            <Setter Property="Visibility"
+                    Value="Collapsed"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Leche}"
+                             Value="True">
+                    <Setter Property="Visibility"
+                            Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Image"
+               x:Key="TriggerSulfitos">
+            <Setter Property="Visibility"
+                    Value="Collapsed"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Sulfitos}"
+                             Value="True">
+                    <Setter Property="Visibility"
+                            Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="TextBlockDerecha">
+            <Setter Property="Margin"
+                    Value="5"></Setter>
+        </Style>
+        <Style TargetType="TextBox"
+               x:Key="TextBoxDerecha">
+            <Setter Property="Margin"
+                    Value="5"></Setter>
+        </Style>
+    </Window.Resources>
+    
+    <Border
+        Margin="10"
+        BorderBrush="Black"
+        BorderThickness="2">
+        <DockPanel
+            Background="White">
+            <StackPanel DockPanel.Dock="Right"
+                        Background="LightGray">
+                <!--Parte de la derecha con las etiquetas-->
+                <!--TODO para el proximo dia hacer que se deshabilite si no hay nada seleccionado-->
+                <TextBlock Style="{StaticResource TextBlockDerecha}">Nombre del plato</TextBlock>
+                <TextBox Text="{Binding Path=PlatoActual.Nombre, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource TextBoxDerecha}"></TextBox>
+                <TextBlock Style="{StaticResource TextBlockDerecha}">Foto del plato</TextBlock>
+                <TextBox Text="{Binding Path=PlatoActual.Imagen, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource TextBoxDerecha}"></TextBox>
+                <TextBlock Style="{StaticResource TextBlockDerecha}">Tipo de comida</TextBlock>
+                <TextBox Text="{Binding Path=PlatoActual.Tipo, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource TextBoxDerecha}"></TextBox>
+                <GroupBox Header="Alérgenos"
+                          Foreground="Black"
+                          BorderBrush="Black"
+                          Margin="5">
+                    <UniformGrid>
+                        <CheckBox IsChecked="{Binding Path=PlatoActual.Leche, UpdateSourceTrigger=PropertyChanged}">Leche</CheckBox>
+                        <CheckBox IsChecked="{Binding Path=PlatoActual.Soja, UpdateSourceTrigger=PropertyChanged}">Soja</CheckBox>
+                        <CheckBox IsChecked="{Binding Path=PlatoActual.Gluten, UpdateSourceTrigger=PropertyChanged}">Gluten</CheckBox>
+                        <CheckBox IsChecked="{Binding Path=PlatoActual.Sulfitos, UpdateSourceTrigger=PropertyChanged}">Sulfitos</CheckBox>
+                    </UniformGrid>
+                </GroupBox>
+                <Button Width="100"
+                        Click="Button_Click">Limpiar Seleccion</Button>
+            </StackPanel>
+            <!--Parte de las fotos con los platos-->
+            <ListBox ItemsSource="{Binding Path=ListaPlatos}"
+                     SelectedItem="{Binding Path=PlatoActual}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black"
+                                BorderThickness="2"
+                                Margin="5"
+                                Padding="5"
+                                Width="200"
+                                MaxWidth="200"
+                                Height="260">
+                            <StackPanel>
+                                <Viewbox Height="40">
+                                    <TextBlock Text="{Binding Path=Nombre}"
+                                               FontFamily="{Binding Path=Tipo, Converter={StaticResource converterFuente}}"
+                                               FontSize="25"></TextBlock>
+                                </Viewbox>
+                                <Image Source="{Binding Path=Imagen}"
+                                       Height="175"
+                                       Width="175"
+                                       Stretch="Fill"></Image>
+                                <DockPanel LastChildFill="False"
+                                           Margin="0,5,0,0">
+                                    <Image DockPanel.Dock="Left"
+                                           Source="{Binding Path=Tipo, Converter={StaticResource converterPais}}"
+                                           Width="25"
+                                           Height="25"
+                                           ToolTip="{Binding Path=Tipo}"></Image>
+                                    <StackPanel Orientation="Horizontal"
+                                                DockPanel.Dock="Right">
+                                        <Image Source="./assets/gluten.png"
+                                               Width="25"
+                                               Height="25"
+                                               Style="{StaticResource TriggerGluten}"></Image>
+                                        <Image Source="./assets/soybean.png"
+                                               Width="25"
+                                               Height="25"
+                                               Style="{StaticResource TriggerSoja}"></Image>
+                                        <Image Source="./assets/sulfide.png"
+                                               Width="25"
+                                               Height="25"
+                                               Style="{StaticResource TriggerSulfitos}"></Image>
+                                        <Image Source="./assets/milk.png"
+                                               Width="25"
+                                               Height="25"
+                                               Style="{StaticResource TriggerLeche}"></Image>
+                                    </StackPanel>
+                                </DockPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+    </Border>
+</Window>
