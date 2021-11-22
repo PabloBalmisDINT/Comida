@@ -18,6 +18,7 @@
         <local:TextBoxHabilitadosConvertidor x:Key="converterTextBox"></local:TextBoxHabilitadosConvertidor>
         
         <!--Estilos y triggers-->
+        <!--Triggers de los iconos de abajo-->
         <Style TargetType="Image" x:Key="TriggerSoja">
             <Setter Property="Visibility"
                     Value="Collapsed"></Setter>
@@ -65,6 +66,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <!--Estilos-->
         <Style TargetType="TextBlock" x:Key="TextBlockDerecha">
             <Setter Property="Margin"
                     Value="5"></Setter>
