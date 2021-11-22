@@ -133,7 +133,11 @@
                                 Padding="5"
                                 Width="200"
                                 MaxWidth="200"
-                                Height="260">
+                                Height="260"
+                                Background="White">
+                            <Border.Effect>
+                                <DropShadowEffect />
+                            </Border.Effect>
                             <StackPanel>
                                 <Viewbox Height="40">
                                     <TextBlock Text="{Binding Path=Nombre}"
