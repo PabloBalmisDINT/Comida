@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Comida"
         mc:Ignorable="d"
         Title="Comidas" 
-        Height="450" 
-        Width="650"
+        Height="475" 
+        Width="700"
         MinHeight="300"
         MinWidth="400"
         Icon="./assets/fruit_food_apple.ico"
@@ -15,6 +15,7 @@
     <Window.Resources>
         <local:PaisCovertidor x:Key="converterPais"></local:PaisCovertidor>
         <local:FuenteConvertidor x:Key="converterFuente"></local:FuenteConvertidor>
+        <local:TextBoxHabilitadosConvertidor x:Key="converterTextBox"></local:TextBoxHabilitadosConvertidor>
         
         <!--Estilos y triggers-->
         <Style TargetType="Image" x:Key="TriggerSoja">
@@ -82,22 +83,27 @@
         <DockPanel
             Background="White">
             <StackPanel DockPanel.Dock="Right"
-                        Background="LightGray">
+                        Background="LightGray"
+                        Width="185">
                 <!--Parte de la derecha con las etiquetas-->
-                <!--TODO para el proximo dia hacer que se deshabilite si no hay nada seleccionado-->
                 <TextBlock Style="{StaticResource TextBlockDerecha}">Nombre del plato</TextBlock>
                 <TextBox Text="{Binding Path=PlatoActual.Nombre, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource TextBoxDerecha}"></TextBox>
+                         Style="{StaticResource TextBoxDerecha}"
+                         IsEnabled="{Binding Path=PlatoActual, Converter={StaticResource converterTextBox}}"></TextBox>
                 <TextBlock Style="{StaticResource TextBlockDerecha}">Foto del plato</TextBlock>
                 <TextBox Text="{Binding Path=PlatoActual.Imagen, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource TextBoxDerecha}"></TextBox>
+                         Style="{StaticResource TextBoxDerecha}"
+                         IsEnabled="{Binding Path=PlatoActual, Converter={StaticResource converterTextBox}}"></TextBox>
                 <TextBlock Style="{StaticResource TextBlockDerecha}">Tipo de comida</TextBlock>
-                <TextBox Text="{Binding Path=PlatoActual.Tipo, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource TextBoxDerecha}"></TextBox>
+                <ComboBox Margin="5"
+                          SelectedItem="{Binding Path=PlatoActual.Tipo}"
+                          ItemsSource="{Binding Path=TipoComida}">
+                </ComboBox>
                 <GroupBox Header="Alérgenos"
                           Foreground="Black"
                           BorderBrush="Black"
-                          Margin="5">
+                          Margin="5"
+                          IsEnabled="{Binding Path=PlatoActual, Converter={StaticResource converterTextBox}}">
                     <UniformGrid>
                         <CheckBox IsChecked="{Binding Path=PlatoActual.Leche, UpdateSourceTrigger=PropertyChanged}">Leche</CheckBox>
                         <CheckBox IsChecked="{Binding Path=PlatoActual.Soja, UpdateSourceTrigger=PropertyChanged}">Soja</CheckBox>

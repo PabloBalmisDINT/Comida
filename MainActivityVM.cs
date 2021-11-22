@@ -34,9 +34,24 @@ namespace Comida
             }
         }
 
+        private ObservableCollection<string> tipoComida;
+        public ObservableCollection<string> TipoComida
+        {
+            get { return tipoComida; }
+            set
+            {
+                tipoComida = value;
+                NotifyPropertyChanged("TipoComida");
+            }
+        }
+
         public MainActivityVM()
         {
             listaPlatos = Plato.GetSamples("./assets");
+            tipoComida = new ObservableCollection<string>();
+            tipoComida.Add("Americana");
+            tipoComida.Add("China");
+            tipoComida.Add("Mexicana");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
