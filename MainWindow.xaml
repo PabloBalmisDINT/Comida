@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Comida"
         mc:Ignorable="d"
-        Title="Comidas" 
+        Title="Comida" 
         Height="475" 
         Width="700"
         MinHeight="300"
@@ -91,30 +91,40 @@
                 <TextBlock Style="{StaticResource TextBlockDerecha}">Nombre del plato</TextBlock>
                 <TextBox Text="{Binding Path=PlatoActual.Nombre, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource TextBoxDerecha}"
-                         IsEnabled="{Binding Path=PlatoActual, Converter={StaticResource converterTextBox}}"></TextBox>
+                         IsEnabled="{Binding Path=PlatoActual, Converter={StaticResource converterTextBox}}"
+                         Template="{DynamicResource TextBoxControlTemplate1}"></TextBox>
                 <TextBlock Style="{StaticResource TextBlockDerecha}">Foto del plato</TextBlock>
                 <TextBox Text="{Binding Path=PlatoActual.Imagen, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource TextBoxDerecha}"
-                         IsEnabled="{Binding Path=PlatoActual, Converter={StaticResource converterTextBox}}"></TextBox>
+                         IsEnabled="{Binding Path=PlatoActual, Converter={StaticResource converterTextBox}}"
+                         Template="{DynamicResource TextBoxControlTemplate1}"></TextBox>
                 <TextBlock Style="{StaticResource TextBlockDerecha}">Tipo de comida</TextBlock>
                 <ComboBox Margin="5"
                           SelectedItem="{Binding Path=PlatoActual.Tipo}"
-                          ItemsSource="{Binding Path=TipoComida}">
+                          ItemsSource="{Binding Path=TipoComida}"
+                          IsEnabled="{Binding Path=PlatoActual, Converter={StaticResource converterTextBox}}">
                 </ComboBox>
                 <GroupBox Header="Alérgenos"
                           Foreground="Black"
                           BorderBrush="Black"
                           Margin="5"
-                          IsEnabled="{Binding Path=PlatoActual, Converter={StaticResource converterTextBox}}">
+                          IsEnabled="{Binding Path=PlatoActual, Converter={StaticResource converterTextBox}}"
+                          Template="{DynamicResource GroupBoxControlTemplate1}">
                     <UniformGrid>
-                        <CheckBox IsChecked="{Binding Path=PlatoActual.Leche, UpdateSourceTrigger=PropertyChanged}">Leche</CheckBox>
-                        <CheckBox IsChecked="{Binding Path=PlatoActual.Soja, UpdateSourceTrigger=PropertyChanged}">Soja</CheckBox>
-                        <CheckBox IsChecked="{Binding Path=PlatoActual.Gluten, UpdateSourceTrigger=PropertyChanged}">Gluten</CheckBox>
-                        <CheckBox IsChecked="{Binding Path=PlatoActual.Sulfitos, UpdateSourceTrigger=PropertyChanged}">Sulfitos</CheckBox>
+                        <CheckBox IsChecked="{Binding Path=PlatoActual.Leche, UpdateSourceTrigger=PropertyChanged}"
+                                  Template="{DynamicResource CheckBoxControlTemplate1}">Leche</CheckBox>
+                        <CheckBox IsChecked="{Binding Path=PlatoActual.Soja, UpdateSourceTrigger=PropertyChanged}"
+                                  Template="{DynamicResource CheckBoxControlTemplate1}">Soja</CheckBox>
+                        <CheckBox IsChecked="{Binding Path=PlatoActual.Gluten, UpdateSourceTrigger=PropertyChanged}"
+                                  Template="{DynamicResource CheckBoxControlTemplate1}">Gluten</CheckBox>
+                        <CheckBox IsChecked="{Binding Path=PlatoActual.Sulfitos, UpdateSourceTrigger=PropertyChanged}"
+                                  Template="{DynamicResource CheckBoxControlTemplate1}">Sulfitos</CheckBox>
                     </UniformGrid>
                 </GroupBox>
                 <Button Width="100"
-                        Click="Button_Click">Limpiar Seleccion</Button>
+                        Click="Button_Click"
+                        Template="{DynamicResource ButtonControlTemplate1}"
+                        IsEnabled="{Binding Path=PlatoActual, Converter={StaticResource converterTextBox}}">Limpiar Seleccion</Button>
             </StackPanel>
             <!--Parte de las fotos con los platos-->
             <ListBox ItemsSource="{Binding Path=ListaPlatos}"
