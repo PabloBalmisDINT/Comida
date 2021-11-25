@@ -11,7 +11,7 @@
         MinHeight="300"
         MinWidth="400"
         Icon="./assets/fruit_food_apple.ico"
-        Background="Cyan">
+        Background="#FF67D4D4">
     <Window.Resources>
         <local:PaisCovertidor x:Key="converterPais"></local:PaisCovertidor>
         <local:FuenteConvertidor x:Key="converterFuente"></local:FuenteConvertidor>
